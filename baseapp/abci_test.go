@@ -840,7 +840,7 @@ func TestABCI_InvalidTransaction(t *testing.T) {
 	suite := NewBaseAppSuite(t, anteOpt)
 	baseapptestutil.RegisterCounterServer(suite.baseApp.MsgServiceRouter(), CounterServerImplGasMeterOnly{})
 
-	suite.baseApp.InitChain(abci.RequestInitChain{
+	suite.baseApp.InitChain(context.Background(), &abci.RequestInitChain{
 		ConsensusParams: &cmtproto.ConsensusParams{},
 	})
 
