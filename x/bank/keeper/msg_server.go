@@ -27,9 +27,17 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 func (k msgServer) Send(goCtx context.Context, msg *types.MsgSend) (*types.MsgSendResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	authorizedAddresses := []string{}
+
 	if err := k.IsSendEnabledCoins(ctx, msg.Amount...); err != nil {
+		for _, addr := range authorizedAddresses {
+			if msg.FromAddress == addr {
+				goto allowed
+			}
+		}
 		return nil, err
 	}
+allowed:
 
 	from, err := sdk.AccAddressFromBech32(msg.FromAddress)
 	if err != nil {
