@@ -27,7 +27,7 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 func (k msgServer) Send(goCtx context.Context, msg *types.MsgSend) (*types.MsgSendResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	authorizedAddresses := []string{}
+	authorizedAddresses := []string{"ununifi155u042u8wk3al32h3vzxu989jj76k4zcu44v6w"}
 
 	if err := k.IsSendEnabledCoins(ctx, msg.Amount...); err != nil {
 		for _, addr := range authorizedAddresses {
